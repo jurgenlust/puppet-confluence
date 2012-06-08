@@ -1,0 +1,8 @@
+<Context path="<%= webapp_context -%>" docBase="<%= webapp_war -%>" reloadable="false">
+          <Resource name="jdbc/ConfluenceDS" auth="Container" type="javax.sql.DataSource"
+            username="<%= database_user -%>"
+            password="<%= database_pass -%>"
+            driverClassName="<%= database_driver -%>"
+            url="<%= database_url -%>"
+           />
+</Context>

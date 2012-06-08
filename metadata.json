@@ -1,0 +1,24 @@
+{
+  "name": "jlust-confluence",
+  "author": "jlust",
+  "description": "",
+  "license": "",
+  "project_page": "",
+  "source": "",
+  "summary": "",
+  "version": "",
+  "checksums": {
+    "Modulefile": "0684c87975f4e3d8f1932f530489e808",
+    "README": "b05dfac476d2eaaf2697f67379e0263a",
+    "README.md": "aef7701f9e08ae808b0e188fbd99ee33",
+    "files/db/postgresql-9.1-902.jdbc4.jar": "42b118950c660485a77dc7e79a8e06b1",
+    "manifests/init.pp": "39b265b998f89cc5613e75fc8fea386e",
+    "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
+    "spec/spec_helper.rb": "ca19ec4f451ebc7fdb035b52eae6e909",
+    "templates/confluence-init.properties.erb": "4f586a2c8ff05b2d9b186707d16d2604",
+    "templates/context.erb": "4ccf93b9ed6952a2913bf5f81d7a2dbb",
+    "tests/Vagrantfile": "dcffe1d55e25807acc4aa1b06ff44735",
+    "tests/init.pp": "cf9c063b8ce3062076d9092be2c85d60"
+  },
+  "dependencies": []
+}
