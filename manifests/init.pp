@@ -20,6 +20,7 @@ class confluence (
 	$database_url = "jdbc:postgresql://localhost/confluence",
 	$database_user = "confluence",
 	$database_pass = "confluence",
+	$memory = "512m",
 	$number = 1,
 	$version = "4.2.4",
 	$contextroot = "confluence",
@@ -77,6 +78,9 @@ class confluence (
 		creates => "${build_dir}/build.sh",
 		timeout => 1200,
 		require => [File[$downloaded_tarball],File[$build_parent_dir]],	
+		notify => [
+			Exec['clean-confluence']	
+		],	
 	}
 
 	file { $build_dir:
@@ -101,13 +105,28 @@ class confluence (
 		require => Exec["extract-confluence"],
 	}
 
-# build the Confluence war-file	
+# clean the previous Confluence war-file	
+	exec { "clean-confluence":
+		command => "/bin/rm -rf ${webapp_base}/${user}/tomcat/webapps/*",
+		user => $user,
+		refreshonly => true,
+		notify => Exec["build-confluence"],
+		require => [
+			Tomcat::Webapp::Tomcat[$user]
+		],
+	}
+
+# build the Confluence war-file
+	
 	exec { "build-confluence":
 		command => "/bin/sh build.sh && mv ${build_dir}/dist/${confluence_build}.war ${webapp_base}/${user}/tomcat/webapps/${webapp_war}",
 		user => $user,
 		creates => "${webapp_base}/${user}/tomcat/webapps/${webapp_war}",
+		timeout => 0,
+		refreshonly => true,
 		cwd => $build_dir,
 		require => [File["confluence.properties"], Tomcat::Webapp::Tomcat[$user]],
+		notify => Tomcat::Webapp::Service[$user]
 	}
 	
 	file { 'confluence-war' :
@@ -133,7 +152,7 @@ class confluence (
 		username => $user, 
 		number => $number,
 		webapp_base => $webapp_base,
-		java_opts => "-server -Dorg.apache.jasper.runtime.BodyContentImpl.LIMIT_BUFFER=true -Dmail.mime.decodeparameters=true -Xms128m -Xmx512m -XX:MaxPermSize=256m -Djava.awt.headless=true",
+		java_opts => "-server -Dorg.apache.jasper.runtime.BodyContentImpl.LIMIT_BUFFER=true -Dmail.mime.decodeparameters=true -Xms${memory} -Xmx${memory} -XX:MaxPermSize=256m -Djava.awt.headless=true",
 		server_host_config => template("confluence/context.erb"),
 		service_require => [File['confluence-war'], File['confluence-db-driver'], File[$confluence_home]],
 		require => Class["tomcat"],
