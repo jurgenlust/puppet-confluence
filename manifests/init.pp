@@ -22,7 +22,7 @@ class confluence (
 	$database_pass = "confluence",
 	$memory = "512m",
 	$number = 1,
-	$version = "4.2.4",
+	$version = "4.2.12",
 	$contextroot = "confluence",
 	$webapp_base = "/srv"
 ){

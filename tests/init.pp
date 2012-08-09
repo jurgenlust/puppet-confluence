@@ -21,7 +21,7 @@ class { "confluence":
 	database_user => "confuser",
 	database_pass => "confluence_secret_password",
 	number => 1, # the Tomcat http port will be 8180
-	version => "4.2.5", # the Confluence version
+	version => "4.2.12", # the Confluence version
 	memory => "1024m",
 	contextroot => "/",
 	webapp_base => "/opt", # Confluence will be installed in /opt/confluence
